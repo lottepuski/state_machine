@@ -1,9 +1,12 @@
-State machine inspired by Fysom. The key differences from Fysom are :
+Description
+----------
+State machine inspired by [Fysom](https://pypi.python.org/pypi/fysom). The key differences from Fysom are :
  - Allow event specific callbacks to take precedence over global callbacks
  - Allow multiple destination states to be specified which simplifies the state
    machine definition
 
 The syntax of the state machine can be expressed by the following structure:
+```
 {
     "initial": "initial state of the state machine",
     "events" : [
@@ -39,8 +42,10 @@ The syntax of the state machine can be expressed by the following structure:
         "on_after": after_handler
     }
 }
+```
 
 A note on the callbacks:
+------------------
 - If an action has a single destination state then the destination is always
     chosen irrespective of the value of the on_event handler (local or global)
 - In case an action has multiple destination states then the on_event callback
