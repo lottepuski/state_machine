@@ -79,9 +79,9 @@ class Machine(object):
             self.register_event(event)
 
     def register_global_callbacks(self, global_cb):
-        ''' Global callbacks are overridden by event specific callbacks
+        """ Global callbacks are overridden by event specific callbacks
         :return: None
-        '''
+        """
         for name, value in global_cb.iteritems():
             setattr(self, name, value)
 
@@ -89,6 +89,7 @@ class Machine(object):
         setattr(self, event[ACTION], self.build_event(event))
 
     def build_event(self, event):
+        # noinspection PyPep8Naming
         def fn(*args, **kwargs):
             class e(object):
                 pass
@@ -115,25 +116,25 @@ class Machine(object):
 
         return fn
 
-    def get_current_or_global(self, event, type):
-        ''' Return the event specific callback if it exists
+    def get_current_or_global(self, event, event_type):
+        """ Return the event specific callback if it exists
             or return global callback.
         :param event: dictionary with keys : actions, src, dst, [callbacks]
-        :param type:  callback type, one of : on_before, on_event, on_after
+        :param event_type:  callback type, one of : on_before, on_event, on_after
         :return:    callback function
-        '''
-        if event.has_key(CALLBACKS) and event[CALLBACKS].has_key(type):
-            return event[CALLBACKS][type]
-        elif hasattr(self, type):
-            return getattr(self, type, None)
+        """
+        if event.has_key(CALLBACKS) and event[CALLBACKS].has_key(event_type):
+            return event[CALLBACKS][event_type]
+        elif hasattr(self, event_type):
+            return getattr(self, event_type, None)
 
     def safe_call_fn(self, fn, e_obj, raise_error=False):
-        ''' Call function
+        """ Call function
         :param fn:
         :param e_obj:
         :param raise_error:
         :return:
-        '''
+        """
         if hasattr(fn, '__call__'):
             return fn(e_obj)
         elif raise_error:
@@ -141,11 +142,11 @@ class Machine(object):
             raise TransitionError(msg.format(fn, e_obj))
 
     def safe_set_current(self, dst, event):
-        ''' If event[EVENT] is a list then use return value of on_event to
+        """ If event[EVENT] is a list then use return value of on_event to
         :param dst:
         :param event:
         :return:
-        '''
+        """
         if isinstance(event[DST], list):
             self.current = dst
         else:
