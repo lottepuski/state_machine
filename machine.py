@@ -98,10 +98,10 @@ class Machine(object):
 
             src = self.current
 
-            e.src = src
-            e.event = event[ACTION]
+            e_obj.src = src
+            e_obj.event = event[ACTION]
             for k in kwargs:
-                setattr(e, k, kwargs[k])
+                setattr(e_obj, k, kwargs[k])
             setattr(e_obj, 'args', args)
             fn.__name__ = event[ACTION]
 
@@ -151,3 +151,6 @@ class Machine(object):
             self.current = dst
         else:
             self.current = event[DST]
+
+    def get_current_state(self):
+        return self.current
